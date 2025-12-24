@@ -30,4 +30,15 @@ const signupSchema = z.object({
     .default("Student"),
 });
 
-module.exports = signupSchema;
+const loginSchema = z.object({
+  email: z
+    .string({ required_error: "Email is required" })
+    .trim()
+    .email({ message: "Invalid email format" }),
+
+  password: z
+    .string({ required_error: "Password is required" })
+    .min(1, { message: "Password is required" }),
+});
+
+module.exports = { signupSchema, loginSchema };

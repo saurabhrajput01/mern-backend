@@ -4,7 +4,11 @@ const validate = (schema) => async (req, res, next) => {
     req.body = parsed;
     next();
   } catch (error) {
-     next(error)
+    if (error.name === 'ZodError') {
+      const errorMessages = error.errors.map(err => err.message);
+      return res.status(400).json({ msg: errorMessages.join(', ') });
+    }
+    next(error);
   }
 };
 
