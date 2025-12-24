@@ -4,7 +4,7 @@ const errormiddleware = (err, req, res, next) => {
   
   // Handle Zod validation errors
   if (err.name === 'ZodError') {
-    const errorMessages = err.errors.map(error => error.message);
+    const errorMessages = err.issues.map(issue => issue.message);
     message = errorMessages.join(', ');
     return res.status(400).json({ msg: message });
   }
